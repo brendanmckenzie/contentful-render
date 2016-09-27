@@ -1,0 +1,28 @@
+{
+  "name": "contentful-render",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brendanmckenzie/contentful-render.git"
+  },
+  "author": "Brendan McKenzie <brendan@mckenzie.io>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brendanmckenzie/contentful-render/issues"
+  },
+  "homepage": "https://github.com/brendanmckenzie/contentful-render#readme",
+  "dependencies": {
+    "aws-sdk": "^2.6.4",
+    "bluebird": "^3.4.6",
+    "ejs": "^2.5.2",
+    "fs-extra": "^0.30.0",
+    "path": "^0.12.7",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  }
+}

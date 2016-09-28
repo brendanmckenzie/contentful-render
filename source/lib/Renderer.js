@@ -27,7 +27,7 @@ class Renderer {
     const renderer = this.rendererMap[def.renderSystem]
     if (!renderer) { return null }
 
-    const model = this.model.fromItem(item)
+    const model = this.model.getModel(item)
 
     return renderer.render(def.template, model)
   }

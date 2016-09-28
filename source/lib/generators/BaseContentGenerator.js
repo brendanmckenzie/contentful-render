@@ -16,14 +16,13 @@ class BaseContentGenerator extends Generator {
   process(params) { }
 
   handleUpdates(res) {
-    const tasks = _.concat(
-      _.map(res.entries, item => ({ action: 'createOrUpdate', item })),
-      _.map(res.deletedEntries || [], item => ({ action: 'delete', item }))
-    )
-
+    const tasks = [
+      ...res.entries.map(item => ({ action: 'createOrUpdate', item })),
+      ...res.deletedEntries.map(item => ({ action: 'delete', item }))
+    ]
     const chunks = _(tasks).chunk(5).value()
-    return Promise.each(chunks, (actions, i, length) => {
-      const promises = actions.map(ent => this[ent.action](ent.item))
+    return Promise.each(chunks, (chunkTasks, i, length) => {
+      const promises = chunkTasks.map(ent => this[ent.action](ent.item))
 
       return Promise.all(promises)
     })
@@ -34,11 +33,12 @@ class BaseContentGenerator extends Generator {
       if (this.renderer.canRender(item)) {
         const url = this.router.resolve(item)
         if (url) {
-          const content = this.renderer.render(item)
-
-          this.fileSystem.write(`${url}/index.html`, content)
-            .then(resolve)
-            .catch(reject)
+          this.renderer.render(item)
+            .then(content => {
+              this.fileSystem.write(`${url}/index.html`, content)
+                .then(resolve)
+                .catch(reject)
+            })
         }
         else {
           resolve('skipped, no url')

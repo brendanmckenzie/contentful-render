@@ -19,6 +19,8 @@
   "dependencies": {
     "aws-sdk": "^2.6.4",
     "bluebird": "^3.4.6",
+    "contentful": "^3.6.4",
+    "dot": "^1.0.3",
     "ejs": "^2.5.2",
     "fs-extra": "^0.30.0",
     "path": "^0.12.7",

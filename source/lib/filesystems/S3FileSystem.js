@@ -1,9 +1,6 @@
 import FileSystem from '../FileSystem'
 import Promise from 'bluebird'
-import fse from 'fs-extra'
 import path from 'path'
-
-const fs = Promise.promisifyAll(fse)
 
 class S3FileSystem extends FileSystem {
   constructor(config) {

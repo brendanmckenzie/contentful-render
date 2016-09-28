@@ -1,17 +1,14 @@
-import BaseGenerator from './BaseGenerator'
+import BaseContentGenerator from './BaseContentGenerator'
 
-class FullSiteGenerator extends BaseGenerator {
+class FullSiteGenerator extends BaseContentGenerator {
   constructor(config, fileSystem, contentful, router, renderer) {
     super(config, fileSystem, contentful, router, renderer)
   }
 
   process(params) {
-    return this.readSyncToken()
-      .then(syncToken => this.contentful.sync({ initial: true }))
+    return this.contentful.sync({ initial: true })
       .then(res => this.handleUpdates(res))
-      .then(() => this.storeSyncToken(res.nextSyncToken), reject)
-      .then(resolve)
-      .catch(reject)
+      .then(res => this.storeSyncToken(res.nextSyncToken))
   }
 }
 

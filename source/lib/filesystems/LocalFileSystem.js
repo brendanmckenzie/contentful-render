@@ -1,6 +1,8 @@
 import FileSystem from '../FileSystem'
 import Promise from 'bluebird'
-import AWS from 'aws-sdk'
+import fse from 'fs-extra'
+
+const fs = Promise.promisifyAll(fse)
 
 class LocalFileSystem extends FileSystem {
   constructor(config) {
@@ -32,8 +34,6 @@ class LocalFileSystem extends FileSystem {
     const fileName = this.translatePath(filePath)
 
     return fs.outputFileAsync(fileName, content, { encoding: 'utf8' })
-      .then(resolve, err => reject(err))
-      .catch(err => reject(err))
   }
 
   delete(filePath) {

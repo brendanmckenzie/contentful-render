@@ -1,4 +1,6 @@
 import Generator from '../Generator'
+import Promise from 'bluebird'
+import _ from 'lodash'
 
 class BaseContentGenerator extends Generator {
   constructor(config, fileSystem, contentful, router, renderer) {
@@ -14,7 +16,7 @@ class BaseContentGenerator extends Generator {
   process(params) { }
 
   handleUpdates(res) {
-    const tasks = _.map(res.entries, item => { action: 'createOrUpdate', item })
+    const tasks = _.map(res.entries, item => ({ action: 'createOrUpdate', item }))
 
     const chunks = _(tasks).chunk(5).value()
     return Promise.each(chunks, (actions, i, length) => {
@@ -73,4 +75,4 @@ class BaseContentGenerator extends Generator {
   }
 }
 
-export default FullSiteGenerator
+export default BaseContentGenerator

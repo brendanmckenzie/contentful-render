@@ -1,6 +1,5 @@
 import EjsRenderer from './renderers/EjsRenderer'
 import ReactRenderer from './renderers/ReactRenderer'
-import Model from '../Model'
 
 class Renderer {
   constructor(config, model) {
@@ -8,7 +7,7 @@ class Renderer {
     this.model = model
 
     // TODO: move this to config to allow for extensibility
-    this.rendererMap = { 
+    this.rendererMap = {
       'ejs': new EjsRenderer(this.config),
       'react': new ReactRenderer(this.config)
     }

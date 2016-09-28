@@ -16,7 +16,10 @@ class BaseContentGenerator extends Generator {
   process(params) { }
 
   handleUpdates(res) {
-    const tasks = _.map(res.entries, item => ({ action: 'createOrUpdate', item }))
+    const tasks = _.concat(
+      _.map(res.entries, item => ({ action: 'createOrUpdate', item })),
+      _.map(res.deletedEntries || [], item => ({ action: 'delete', item }))
+    )
 
     const chunks = _(tasks).chunk(5).value()
     return Promise.each(chunks, (actions, i, length) => {

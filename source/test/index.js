@@ -17,7 +17,7 @@ const main = () => {
       'content': {
         canRender: true,
         renderSystem: 'ejs',
-        route: '/{{=it.fields.slug}}',
+        route: '/{{=it.slug}}',
         template: 'content'
       }
     }

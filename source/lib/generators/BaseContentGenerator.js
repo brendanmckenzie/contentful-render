@@ -26,6 +26,7 @@ class BaseContentGenerator extends Generator {
 
       return Promise.all(promises)
     })
+    .then(() => res)
   }
 
   createOrUpdate(item) {

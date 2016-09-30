@@ -29,7 +29,7 @@ class Renderer {
 
     const model = this.model.getModel(item)
 
-    return renderer.render(def.template, model)
+    return renderer.render(def.template, { model })
   }
 }
 

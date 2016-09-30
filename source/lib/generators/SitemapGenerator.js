@@ -1,5 +1,4 @@
 import Promise from 'bluebird'
-import dot from 'dot'
 import moment from 'moment'
 import Generator from '../Generator'
 
@@ -41,14 +40,11 @@ class SitemapGenerator extends Generator {
   }
 
   generateXml(items) {
-    const validItems = items.filter(ent => !!ent && !!ent.url) // ignore null entries
+    const innerXml = items.filter(ent => !!ent && !!ent.url)
+      .map(ent => `<url><loc>${ent.url}</loc><lastmod>${ent.lastmod}</lastmod></url>`)
+      .join('')
 
-    const template = dot.template('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{{=it.items}}</urlset>')
-    const itemTemplate = dot.template('<url><loc>{{=it.url}}</loc><lastmod>{{=it.lastmod}}</lastmod></url>')
-
-    return template({
-      items: validItems.map(ent => itemTemplate({ ...ent, $fn: { moment } })).join('')
-    })
+    return `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${innerXml}</urlset>`
   }
 
   writeSitemap(xml) {

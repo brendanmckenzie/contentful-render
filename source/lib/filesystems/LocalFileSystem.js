@@ -12,7 +12,9 @@ class LocalFileSystem extends FileSystem {
   }
 
   translatePath(filePath) {
-    return filePath.replace(/^(\/+)/, '').replace(/(\/{2,})/g, '/')
+    const ret = (this.config.outputPath || '') + '/' + filePath
+
+    return ret.replace(/^(\/+)/, '').replace(/(\/{2,})/g, '/')
   }
 
   read(filePath, params) {

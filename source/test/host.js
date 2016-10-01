@@ -2,8 +2,8 @@ import contentful from 'contentful'
 import Router from '../lib/Router'
 import Renderer from '../lib/Renderer'
 import Model from '../lib/Model'
-import FullSiteGenerator from '../lib/generators/FullSiteGenerator'
-import LocalFileSystem from '../lib/filesystems/LocalFileSystem'
+
+import express from 'express';
 
 import config from './config'
 
@@ -14,14 +14,21 @@ const main = () => {
   })
 
   const model = new Model(config)
-  const fileSystem = new LocalFileSystem(config)
   const router = new Router(config, model, contentfulClient)
   const renderer = new Renderer(config, model)
-  const generator = new FullSiteGenerator(config, fileSystem, contentfulClient, router, renderer)
 
-  generator.process()
-    .then(res => console.log('done', res))
-    .catch(err => console.error('error', err))
+  const app = express()
+
+  app.get('/*', (httpReq, httpRes) => {
+    console.log('<', httpReq.url)
+    router.getContentByUrl(httpReq.url)
+      .then(res => renderer.render(res))
+      .then(res => res ? httpRes.send(res) : httpRes.status(404).send('Not found'))
+      .catch(err => httpRes.send(err))
+  })
+
+  app.listen(6088)
+  console.log('listening on port 6088')
 }
 
 main()

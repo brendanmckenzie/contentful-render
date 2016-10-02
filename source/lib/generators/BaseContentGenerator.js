@@ -16,19 +16,19 @@ class BaseContentGenerator extends Generator {
     ]
     const chunks = _(tasks).chunk(5).value()
     return Promise.each(chunks, (chunkTasks, i, length) => {
-      const promises = chunkTasks.map(ent => this[ent.action](ent.item))
+      const promises = chunkTasks.map(ent => this[ent.action](ent.item, res.variables))
 
       return Promise.all(promises)
     })
     .then(() => res.data)
   }
 
-  createOrUpdate(item) {
+  createOrUpdate(item, variables) {
     return new Promise((resolve, reject) => {
       if (this.renderer.canRender(item)) {
         const url = this.router.resolve(item)
         if (url) {
-          this.renderer.render(item)
+          this.renderer.render(item, variables)
             .then(content => {
               this.fileSystem.write(`${url}/index.html`, content)
                 .then(resolve)

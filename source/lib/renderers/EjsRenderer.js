@@ -9,7 +9,6 @@ class EjsRenderer extends BaseRenderer {
       const templateFile = path.join(this.config.templatePath, `${template}.ejs`)
       const params = {
         root: this.config.templatePath,
-        rmWhitespace: true,
         strict: false
       }
       ejs.renderFile(templateFile, model, params,

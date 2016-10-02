@@ -20,7 +20,7 @@ class Renderer {
     return !!def.canRender
   }
 
-  render(item) {
+  render(item, variables) {
     const def = this.config.contentTypes[item.sys.contentType.sys.id]
     if (!def) { return null }
 
@@ -29,7 +29,9 @@ class Renderer {
 
     const model = this.model.getModel(item)
 
-    return renderer.render(def.template, { model })
+    variables = variables || {}
+
+    return renderer.render(def.template, { variables, model })
   }
 }
 

@@ -16,7 +16,7 @@ class IncrementalGenerator extends BaseGenerator {
       )
       .then(res => this.retreiveEntries(res))
       .then(res => this.handleUpdates(res))
-      .then(() => this.storeSyncToken(res.nextSyncToken), reject)
+      .then(() => this.storeSyncToken(res.nextSyncToken))
   }
 
   retreiveEntries(syncRes) {

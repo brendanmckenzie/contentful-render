@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --compilers js:babel-core/register source/test/*.spec.js",
     "build": "webpack",
     "prepublish": "npm run build"
   },
@@ -36,5 +36,9 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "webpack": "^1.13.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.0"
   }
 }

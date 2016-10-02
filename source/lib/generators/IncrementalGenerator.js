@@ -8,6 +8,12 @@ class IncrementalGenerator extends BaseGenerator {
   process(params) {
     return this.readSyncToken()
       .then(syncToken => this.contentful.sync({ initial: !syncToken, nextSyncToken: syncToken }))
+      .then(res => this.resolveVariables()
+        .then(variables => ({
+          variables,
+          data: res
+        }))
+      )
       .then(res => this.retreiveEntries(res))
       .then(res => this.handleUpdates(res))
       .then(() => this.storeSyncToken(res.nextSyncToken), reject)

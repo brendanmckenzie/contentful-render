@@ -21,10 +21,17 @@ const config = {
           'fields.slug': slug
         }
         return contentful.getEntries(params)
-          .then(res => {
-            return res.items[0]
-          })
+          .then(res => res.items[0])
       }
+    }
+  },
+  variables: {
+    siteSettings: (contentful, model) => {
+      const params = {
+        'content_type': 'siteSettings'
+      }
+      return contentful.getEntries(params)
+        .then(res => res.items[0])
     }
   }
 }

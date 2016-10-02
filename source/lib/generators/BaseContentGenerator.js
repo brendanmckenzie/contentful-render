@@ -4,21 +4,15 @@ import _ from 'lodash'
 
 class BaseContentGenerator extends Generator {
   constructor(config, fileSystem, contentful, router, renderer) {
-    super()
-
-    this.config = config
-    this.fileSystem = fileSystem
-    this.contentful = contentful
-    this.router = router
-    this.renderer = renderer
+    super(config, fileSystem, contentful, router, renderer)
   }
 
   process(params) { }
 
   handleUpdates(res) {
     const tasks = [
-      ...res.entries.map(item => ({ action: 'createOrUpdate', item })),
-      ...res.deletedEntries.map(item => ({ action: 'delete', item }))
+      ...res.data.entries.map(item => ({ action: 'createOrUpdate', item })),
+      ...res.data.deletedEntries.map(item => ({ action: 'delete', item }))
     ]
     const chunks = _(tasks).chunk(5).value()
     return Promise.each(chunks, (chunkTasks, i, length) => {
@@ -26,7 +20,7 @@ class BaseContentGenerator extends Generator {
 
       return Promise.all(promises)
     })
-    .then(() => res)
+    .then(() => res.data)
   }
 
   createOrUpdate(item) {

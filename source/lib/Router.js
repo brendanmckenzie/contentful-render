@@ -10,7 +10,7 @@ class Router {
     this.contentful = contentful
   }
 
-  resolve(item) {
+  resolve(item, absolute) {
     const def = this.config.contentTypes[item.sys.contentType.sys.id]
     if (!def) { return null }
 
@@ -18,7 +18,13 @@ class Router {
 
     const template = dot.template(def.route)
 
-    return template({ ...model, $fn: { moment } })
+    const relative = template({ ...model, $fn: { moment } })
+    if (absolute) {
+      return `${this.config.baseUrl}${absolute}`
+    }
+    else {
+      return relative
+    }
   }
 
   getContentByUrl(url) {

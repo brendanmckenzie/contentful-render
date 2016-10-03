@@ -12,6 +12,17 @@ module.exports = {
   },
 
   externals: [
+    'aws-sdk',
+    'bluebird',
+    'contentful',
+    'dot',
+    'ejs',
+    'express',
+    'fs-extra',
+    'moment',
+    'path',
+    'react',
+    'react-dom',
   ],
 
   resolve: {

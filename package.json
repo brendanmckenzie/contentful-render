@@ -1,8 +1,8 @@
 {
   "name": "contentful-render",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register source/test/*.spec.js",
     "build": "webpack",
@@ -20,25 +20,27 @@
   "homepage": "https://github.com/brendanmckenzie/contentful-render#readme",
   "dependencies": {
     "aws-sdk": "^2.6.4",
+    "bluebird": "^3.4.6",
+    "contentful": "^3.6.4",
+    "dot": "^1.0.3",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "fs-extra": "^0.30.0",
+    "moment": "^2.15.1",
+    "path": "^0.12.7",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  },
+  "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-polyfill": "^6.13.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-0": "^6.5.0",
-    "bluebird": "^3.4.6",
-    "contentful": "^3.6.4",
-    "dot": "^1.0.3",
-    "ejs": "^2.5.2",
-    "fs-extra": "^0.30.0",
-    "moment": "^2.15.1",
-    "path": "^0.12.7",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "webpack": "^1.13.2"
-  },
-  "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.1.0"
+    "json-loader": "^0.5.4",
+    "mocha": "^3.1.0",
+    "webpack": "^1.13.2"
   }
 }

@@ -1,6 +1,6 @@
-import BaseGenerator from './BaseGenerator'
+import BaseContentGenerator from './BaseContentGenerator'
 
-class IncrementalGenerator extends BaseGenerator {
+class IncrementalGenerator extends BaseContentGenerator {
   constructor(config, fileSystem, contentful, router, renderer) {
     super(config, fileSystem, contentful, router, renderer)
   }

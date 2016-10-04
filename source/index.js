@@ -1,25 +1,15 @@
-const exports = {
-  FileSystem: require('./lib/FileSystem').default,
-  Generator: require('./lib/Generator').default,
-  Host: require('./lib/Host').default,
-  Model: require('./lib/Model').default,
-  Renderer: require('./lib/Renderer').default,
-  Router: require('./lib/Router').default,
-  fileSystems: {
-    S3FileSystem: require('./lib/filesystems/S3FileSystem').default,
-    LocalFileSystem: require('./lib/filesystems/LocalFileSystem').default,
-  },
-  generators: {
-    BaseContentGenerator: require('./lib/generators/BaseContentGenerator').default,
-    FullSiteGenerator: require('./lib/generators/FullSiteGenerator').default,
-    IncrementalGenerator: require('./lib/generators/IncrementalGenerator').default,
-    SitemapGenerator: require('./lib/generators/SitemapGenerator').default,
-  },
-  renderers: {
-    BaseRenderer: require('./lib/renderers/BaseRenderer').default,
-    EjsRenderer: require('./lib/renderers/EjsRenderer').default,
-    ReactRenderer: require('./lib/renderers/ReactRenderer').default,
-  },
-}
-
-export default exports
+export const FileSystem = require('./lib/FileSystem').default
+export const Generator = require('./lib/Generator').default
+export const Host = require('./lib/Host').default
+export const Model = require('./lib/Model').default
+export const Renderer = require('./lib/Renderer').default
+export const Router = require('./lib/Router').default
+export const S3FileSystem = require('./lib/filesystems/S3FileSystem').default
+export const LocalFileSystem = require('./lib/filesystems/LocalFileSystem').default
+export const BaseContentGenerator = require('./lib/generators/BaseContentGenerator').default
+export const FullSiteGenerator = require('./lib/generators/FullSiteGenerator').default
+export const IncrementalGenerator = require('./lib/generators/IncrementalGenerator').default
+export const SitemapGenerator = require('./lib/generators/SitemapGenerator').default
+export const BaseRenderer = require('./lib/renderers/BaseRenderer').default
+export const EjsRenderer = require('./lib/renderers/EjsRenderer').default
+export const ReactRenderer = require('./lib/renderers/ReactRenderer').default

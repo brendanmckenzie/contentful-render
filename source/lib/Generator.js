@@ -26,11 +26,17 @@ class Generator {
 
   resolveVariables() {
     const promises = _(this.config.variables || {})
-      .mapValues(ent => ent())
+      .mapValues(ent => ent(this.contentful, this.model))
       .value()
 
-    // TODO: ensure that this will return a promise that resolves all 'variables'
-    return Promise.all(promises)
+    return Promise.all(Object.keys(promises).map(k => promises[k]))
+      .then(res => {
+        let ret = {}
+
+        Object.keys(promises).forEach((k, i) => ret[k] = res[i])
+
+        return ret
+      })
   }
 }
 

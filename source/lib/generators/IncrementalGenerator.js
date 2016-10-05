@@ -23,8 +23,8 @@ class IncrementalGenerator extends BaseContentGenerator {
       .then(getEntriesRes => {
         return {
           data: {
+            ...res.data,
             entries: getEntriesRes.items,
-            deletedEntries: res.data.deletedEntries
           },
           variables: res.variables
         }

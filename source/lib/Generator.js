@@ -25,18 +25,7 @@ class Generator {
   process() { }
 
   resolveVariables() {
-    const promises = _(this.config.variables || {})
-      .mapValues(ent => ent(this.contentful, this.model))
-      .value()
-
-    return Promise.all(Object.keys(promises).map(k => promises[k]))
-      .then(res => {
-        let ret = {}
-
-        Object.keys(promises).forEach((k, i) => ret[k] = res[i])
-
-        return ret
-      })
+    return Promise.props(this.config.variables)
   }
 }
 

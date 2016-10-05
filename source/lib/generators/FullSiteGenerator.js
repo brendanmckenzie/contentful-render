@@ -6,14 +6,10 @@ class FullSiteGenerator extends BaseContentGenerator {
   }
 
   process(params) {
-    return this.contentful.sync({ initial: true })
-      .then(res => this.resolveVariables()
-        .then(variables => ({
-          variables,
-          data: res
-        }))
-      )
-      .then(res => this.handleUpdates(res))
+    return Promise.all([
+      this.contentful.sync({ initial: true }),
+      this.resolveVariables() ])
+      .then(([ data, variables ]) => this.handleUpdates({ data, variables }))
       .then(res => this.storeSyncToken(res.nextSyncToken))
   }
 }

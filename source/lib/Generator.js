@@ -18,7 +18,7 @@ class Generator {
 
     this.model = new Model(config)
     this.router = new Router(config, this.model, this.contentful)
-    this.renderer = new Renderer(config, this.model)
+    this.renderer = new Renderer(config, this.model, this.router)
   }
 
 

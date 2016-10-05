@@ -34,6 +34,7 @@ class BaseContentGenerator extends Generator {
                 .then(resolve)
                 .catch(reject)
             })
+            .catch(reject)
         }
         else {
           resolve('skipped, no url')
@@ -69,7 +70,7 @@ class BaseContentGenerator extends Generator {
   }
 
   readSyncToken() {
-    return this.fileSystem.read('./data/synctoken.txt')
+    return this.fileSystem.read('.data/synctoken.txt')
   }
 }
 

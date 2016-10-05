@@ -7,27 +7,26 @@ class IncrementalGenerator extends BaseContentGenerator {
 
   process(params) {
     return this.readSyncToken()
-      .then(syncToken => this.contentful.sync({ initial: !syncToken, nextSyncToken: syncToken }))
-      .then(res => this.resolveVariables()
-        .then(variables => ({
-          variables,
-          data: res
-        }))
-      )
-      .then(res => this.retreiveEntries(res))
-      .then(res => this.handleUpdates(res))
-      .then(() => this.storeSyncToken(res.nextSyncToken))
+      .then(syncToken => Promise.all([
+        this.contentful.sync({ initial: !syncToken, nextSyncToken: syncToken }),
+        this.resolveVariables() ]))
+      .then(([ data, variables ]) => this.retreiveEntries({ data, variables }))
+      .then(res => this.handleUpdates({ data: res.data, variables: res.variables }))
+      .then(res => this.storeSyncToken(res.nextSyncToken))
   }
 
-  retreiveEntries(syncRes) {
+  retreiveEntries(res) {
     const params = {
-      'sys.id[in]': syncRes.entries.map(item => item.sys.id)
+      'sys.id[in]': res.data.entries.map(item => item.sys.id)
     }
     return this.contentful.getEntries(params)
       .then(getEntriesRes => {
         return {
-          entries: getEntriesRes.items,
-          deletedEntries: syncRes.deletedEntries
+          data: {
+            entries: getEntriesRes.items,
+            deletedEntries: res.data.deletedEntries
+          },
+          variables: res.variables
         }
       })
   }

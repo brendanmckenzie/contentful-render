@@ -25,7 +25,11 @@ class Generator {
   process() { }
 
   resolveVariables() {
-    return Promise.props(this.config.variables)
+    let obj = {}
+    for (var k in this.config.variables) {
+      obj[k] = this.config.variables[k](this.contentful, this.model)
+    }
+    return Promise.props(obj)
   }
 }
 

@@ -17,6 +17,10 @@ const Host = (config) => {
 
   const app = express()
 
+  if (config.staticPath) {
+    app.use(express.static(config.staticPath))
+  }
+
   app.get('/*', (httpReq, httpRes) => {
     console.log('<', httpReq.url)
     router.getContentByUrl(httpReq.url)

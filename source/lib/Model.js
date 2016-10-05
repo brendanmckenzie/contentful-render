@@ -10,7 +10,7 @@ class Model {
 
     let visitedIds = {}
 
-    const handleObject = (fields, value, level) => {
+    const handleObject = (value, level) => {
       if (typeof(value) === 'object' && value !== null) {
         if (value.hasOwnProperty('fields')) {
           if (value.sys && value.sys.id) {
@@ -43,14 +43,17 @@ class Model {
         }
 
         if (value instanceof Array) {
-          return _.map(value, ent => handleObject(fields, ent, level)) || []
+          return _.map(value, ent => ({
+              ...extractLocale(ent, level).fields,
+              $item: ent
+            }))
         }
 
         if (typeof(value) === 'object' && value.hasOwnProperty(locale)) {
           value = value[locale]
         }
 
-        return handleObject(fields, value, level)
+        return handleObject(value, level)
       })
     }
 

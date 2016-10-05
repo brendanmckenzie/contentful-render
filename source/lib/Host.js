@@ -13,7 +13,7 @@ const Host = (config) => {
 
   const model = new Model(config)
   const router = new Router(config, model, contentfulClient)
-  const renderer = new Renderer(config, model)
+  const renderer = new Renderer(config, model, router)
 
   const app = express()
 
@@ -26,7 +26,7 @@ const Host = (config) => {
     router.getContentByUrl(httpReq.url)
       .then(res => renderer.render(res))
       .then(res => res ? httpRes.send(res) : httpRes.status(404).send('Not found'))
-      .catch(err => httpRes.send(err))
+      .catch(err => httpRes.send({ error: err, stack: err.stack }))
   })
 
   app.listen(6088)

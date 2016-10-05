@@ -4,7 +4,7 @@ import LocalFileSystem from '../lib/filesystems/LocalFileSystem'
 import config from './config'
 
 const main = () => {
-  const generator = new FullSiteGenerator(config, LocalFileSystem(config))
+  const generator = new FullSiteGenerator(config, new LocalFileSystem(config))
 
   generator.process()
     .then(res => console.log('done', res))

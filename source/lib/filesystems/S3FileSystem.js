@@ -27,6 +27,7 @@ class S3FileSystem extends FileSystem {
 
     return this.s3.getObjectAsync(getObjectConfig)
       .then(result => result.Body.toString('utf8'))
+      .catch(err => null)
   }
 
   write(filePath, content, params) {

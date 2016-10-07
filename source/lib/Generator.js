@@ -1,7 +1,8 @@
 import Promise from 'bluebird'
 import _ from 'lodash'
 
-import contentful from 'contentful'
+import axios from 'contentful-sdk-core/vendor-node/axios';
+import Contentful from 'contentful/dist/contentful';
 import Router from './Router'
 import Renderer from './Renderer'
 import Model from './Model'
@@ -11,7 +12,7 @@ class Generator {
     this.config = config
     this.fileSystem = fileSystem
 
-    this.contentful = contentful.createClient({
+    this.contentful = Contentful(axios, {
       space: config.contentful.space,
       accessToken: config.contentful.apiKey
     })

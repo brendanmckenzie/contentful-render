@@ -11,13 +11,13 @@ class IncrementalGenerator extends BaseContentGenerator {
         this.contentful.sync({ initial: !syncToken, nextSyncToken: syncToken }),
         this.resolveVariables() ]))
       .then(([ data, variables ]) => this.retreiveEntries({ data, variables }))
-      .then(res => this.handleUpdates({ ...variables }))
+      .then(res => this.handleUpdates({ ...res }))
       .then(res => this.storeSyncToken(res.nextSyncToken))
   }
 
   retreiveEntries(res) {
     const params = {
-      'sys.id[in]': res.data.entries.map(item => item.sys.id)
+      'sys.id[in]': res.data.entries.map(item => item.sys.id).join(',')
     }
     return this.contentful.getEntries(params)
       .then(getEntriesRes => {

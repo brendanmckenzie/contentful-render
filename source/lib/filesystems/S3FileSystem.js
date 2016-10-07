@@ -1,16 +1,21 @@
 import FileSystem from '../FileSystem'
 import Promise from 'bluebird'
 import path from 'path'
+import AWS from 'aws-sdk'
+
+
 
 class S3FileSystem extends FileSystem {
   constructor(config) {
     super()
 
     this.config = config
+
+    this.s3 = Promise.promisifyAll(new AWS.S3())
   }
 
   translatePath(filePath) {
-    return path.join(this.config.destPath, filePath)
+    return path.join(this.config.destPath, filePath).replace(/^(\/+)/, '').replace(/(\/{2,})/g, '/')
   }
 
   read(filePath, params) {
@@ -19,9 +24,9 @@ class S3FileSystem extends FileSystem {
       Bucket: this.config.bucket,
       ...params
     }
+
     return this.s3.getObjectAsync(getObjectConfig)
       .then(result => result.Body.toString('utf8'))
-      .catch(err => resolve(null))
   }
 
   write(filePath, content, params) {
@@ -30,12 +35,11 @@ class S3FileSystem extends FileSystem {
       Bucket: this.config.bucket,
       Key: this.translatePath(filePath),
       Body: content,
+      ContentType: 'text/html',
       ...params
     }
 
     return this.s3.putObjectAsync(putObjectConfig)
-      .then(result => resolve(result), err => reject(err))
-      .catch(err => reject(err))
   }
 
   delete(filePath) {
@@ -45,8 +49,6 @@ class S3FileSystem extends FileSystem {
     }
 
     return this.s3.deleteObjectAsync(putObjectConfig)
-      .then(result => resolve(result), err => reject(err))
-      .catch(err => reject(err))
   }
 }
 

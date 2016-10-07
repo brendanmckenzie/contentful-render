@@ -15,14 +15,17 @@ class Model {
         if (typeof(value) === 'undefined' || value === null) {
           ret = null
         }
-        else if (locale in value) {
+        else if (value.hasOwnProperty(locale)) {
            ret = value[locale]
+        }
+        else {
+          ret = value
         }
 
         if (ret instanceof Array) {
           ret = _.map(ret, ent => ({ ...extractLocale(ent), $item: ent }))
         }
-        else if (ret.hasOwnProperty('fields')) {
+        else if (ret && ret.hasOwnProperty('fields')) {
           ret = { ...extractLocale(ret), $item: ret }
         }
 

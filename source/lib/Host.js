@@ -1,4 +1,5 @@
-import contentful from 'contentful'
+import axios from 'contentful-sdk-core/vendor-node/axios';
+import Contentful from 'contentful/dist/contentful';
 import Router from '../lib/Router'
 import Renderer from '../lib/Renderer'
 import Model from '../lib/Model'
@@ -6,13 +7,14 @@ import Model from '../lib/Model'
 import express from 'express';
 
 const Host = (config) => {
-  const contentfulClient = contentful.createClient({
+  const contentful = Contentful(axios, {
     space: config.contentful.space,
-    accessToken: config.contentful.apiKey
+    accessToken: config.contentful.apiKey,
+    host: (config.contentful.preview ? 'preview.contentful.com' : 'cdn.contentful.com')
   })
 
   const model = new Model(config)
-  const router = new Router(config, model, contentfulClient)
+  const router = new Router(config, model, contentful)
   const renderer = new Renderer(config, model, router)
 
   const app = express()

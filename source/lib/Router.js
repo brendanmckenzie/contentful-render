@@ -20,7 +20,7 @@ class Router {
 
     const relative = template({ ...model, $fn: { moment } })
     if (absolute) {
-      return `${this.config.baseUrl}${absolute}`
+      return `${this.config.baseUrl}${relative}`
     }
     else {
       return relative

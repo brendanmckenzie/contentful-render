@@ -3,8 +3,8 @@ import Promise from 'bluebird'
 import _ from 'lodash'
 
 class BaseContentGenerator extends Generator {
-  constructor(config, fileSystem, contentful, router, renderer) {
-    super(config, fileSystem, contentful, router, renderer)
+  constructor(config, fileSystem) {
+    super(config, fileSystem)
   }
 
   process(params) { }

@@ -3,14 +3,8 @@ import moment from 'moment'
 import Generator from '../Generator'
 
 class SitemapGenerator extends Generator {
-  constructor(config, fileSystem, contentful, router, renderer) {
-    super()
-
-    this.config = config
-    this.fileSystem = fileSystem
-    this.contentful = contentful
-    this.router = router
-    this.renderer = renderer
+  constructor(config, fileSystem) {
+    super(config, fileSystem)
   }
 
   process(params) {

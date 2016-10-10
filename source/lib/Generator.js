@@ -15,7 +15,7 @@ class Generator {
     this.contentful = Contentful(axios, {
       space: config.contentful.space,
       accessToken: config.contentful.apiKey,
-      host: (config.contentful.preview ? 'preview.contentful.com' : 'cdn.contentful.com')
+      host: config.contentful.host || (config.contentful.preview ? 'preview.contentful.com' : 'cdn.contentful.com')
     })
 
     this.model = new Model(config)

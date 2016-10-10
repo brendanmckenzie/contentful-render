@@ -1,8 +1,8 @@
 import BaseContentGenerator from './BaseContentGenerator'
 
 class IncrementalGenerator extends BaseContentGenerator {
-  constructor(config, fileSystem, contentful, router, renderer) {
-    super(config, fileSystem, contentful, router, renderer)
+  constructor(config, fileSystem) {
+    super(config, fileSystem)
   }
 
   process(params) {

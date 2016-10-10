@@ -23,7 +23,7 @@ class Model {
         }
 
         if (ret instanceof Array) {
-          ret = _.map(ret, ent => ({ ...extractLocale(ent), $item: ent }))
+          ret = _.map(ret, ent => ent.hasOwnProperty('fields') ? ({ ...extractLocale(ent), $item: ent }) : ent)
         }
         else if (ret && ret.hasOwnProperty('fields')) {
           ret = { ...extractLocale(ret), $item: ret }

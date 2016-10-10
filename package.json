@@ -1,12 +1,12 @@
 {
   "name": "contentful-render",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register source/test/*.spec.js",
     "build": "webpack",
-    "prepublish": "npm run build"
+    "prepublish": "rm -rf dist; npm run build"
   },
   "repository": {
     "type": "git",

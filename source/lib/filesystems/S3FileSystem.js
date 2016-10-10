@@ -2,7 +2,7 @@ import FileSystem from '../FileSystem'
 import Promise from 'bluebird'
 import path from 'path'
 import AWS from 'aws-sdk'
-
+import mime from 'mime-types'
 
 
 class S3FileSystem extends FileSystem {
@@ -36,7 +36,7 @@ class S3FileSystem extends FileSystem {
       Bucket: this.config.bucket,
       Key: this.translatePath(filePath),
       Body: content,
-      ContentType: 'text/html',
+      ContentType: mime.lookup(filePath) || 'text/html',
       ...params
     }
 

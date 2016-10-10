@@ -18,7 +18,7 @@ class SitemapGenerator extends Generator {
     const promises = res.entries.map(item =>
       new Promise((resolve, reject) => {
         if (this.renderer.canRender(item)) {
-          const url = this.router.resolve(item)
+          const url = this.router.resolve(item, true)
           if (url) {
             resolve({
               url,

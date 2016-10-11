@@ -5,11 +5,11 @@ class Model {
     this.config = config
   }
 
-  getModel(item, locale = null, maxDepth = 10) {
+  getModel(item, locale = null) {
     locale = locale || this.config.defaultLocale
 
     const extractLocale = (item) => {
-      return _.mapValues(item.fields, (value, key, object) => {
+      return _.mapValues(item.fields, (value) => {
         let ret = null
 
         if (typeof(value) === 'undefined' || value === null) {

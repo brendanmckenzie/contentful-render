@@ -9,8 +9,9 @@ class IncrementalGenerator extends BaseContentGenerator {
     return this.readSyncToken()
       .then(syncToken => Promise.all([
         this.contentful.sync({ initial: !syncToken, nextSyncToken: syncToken }),
-        this.resolveVariables() ]))
-      .then(([ data, variables ]) => this.retreiveEntries({ data, variables }))
+        this.resolveVariables(),
+        { initial: !syncToken, nextSyncToken: syncToken } ]))
+      .then(([ data, variables, config ]) => config.initial ? { data, variables } : this.retreiveEntries({ data, variables }))
       .then(res => this.handleUpdates({ ...res }))
       .then(res => this.storeSyncToken(res.nextSyncToken))
   }

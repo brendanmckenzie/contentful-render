@@ -34,7 +34,10 @@ class BaseContentGenerator extends Generator {
                 .then(resolve)
                 .catch(reject)
             })
-            .catch(reject)
+            .catch(err => {
+              console.log(`failed to render: ${item.sys.id}`)
+              resolve()
+             })
         }
         else {
           resolve('skipped, no url')

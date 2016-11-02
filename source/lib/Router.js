@@ -29,7 +29,7 @@ class Router {
 
   getContentByUrl(url) {
     const promises = _(this.config.contentTypes)
-      .pickBy(ent => ent.canRender && ent.resolve)
+      .filter(ent => ent.canRender && ent.resolve)
       .map(ent => ent.resolve)
       .filter(ent => typeof(ent) === 'function')
       .map(ent => ent(url, this.contentful))

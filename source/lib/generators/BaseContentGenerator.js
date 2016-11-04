@@ -26,11 +26,15 @@ class BaseContentGenerator extends Generator {
   createOrUpdate(item, variables) {
     return new Promise((resolve, reject) => {
       if (this.renderer.canRender(item)) {
+        console.time('createOrUpdate ' + item.sys.id)
         const url = this.router.resolve(item)
         if (url) {
           this.renderer.render(item, variables)
             .then(content => {
               this.fileSystem.write(`${url}/index.html`, content)
+                .then(function(){
+                    console.timeEnd('createOrUpdate ' + item.sys.id)
+                })
                 .then(resolve)
                 .catch(reject)
             })

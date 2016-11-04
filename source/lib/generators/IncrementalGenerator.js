@@ -19,7 +19,7 @@ class IncrementalGenerator extends BaseContentGenerator {
   retreiveEntries(res) {
     const params = {
       'sys.id[in]': res.data.entries.map(item => item.sys.id).join(','),
-      include: 2
+      'include': 2
     }
     return this.contentful.getEntries(params)
       .then(getEntriesRes => {

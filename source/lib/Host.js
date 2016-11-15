@@ -32,10 +32,23 @@ const Host = (config) => {
   Promise.props(obj).then(variables => {
     app.get('/*', (httpReq, httpRes) => {
       console.log('<', httpReq.url)
-      router.getContentByUrl(httpReq.url)
+      const url = httpReq.url.replace(/index\.html$/, '').replace(/data\.json$/, '')
+      router.getContentByUrl(url)
         .then(res => renderer.render(res, variables))
-        .then(res => res ? httpRes.send(res) : httpRes.status(404).send('Not found'))
-        .catch(err => httpRes.send({ error: err, stack: err.stack }))
+        .then(res => {
+          if (res) {
+            if (res instanceof Object) {
+              const parts = httpReq.url.split('?')[0].split('/')
+              const fileName = parts[parts.length - 1] || 'index.html'
+              httpRes.send(res[fileName])
+            } else {
+              httpRes.send(res)
+            }
+          } else {
+            httpRes.status(404).send('Not found')
+          }
+        })
+        .catch(err => httpRes.send(JSON.stringify({ error: err, stack: err.stack }, null, 2)))
     })
   })
 

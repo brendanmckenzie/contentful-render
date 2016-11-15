@@ -33,6 +33,7 @@ class Router {
       .map(ent => ent.resolve)
       .filter(ent => typeof(ent) === 'function')
       .map(ent => ent(url, this.contentful))
+      .value()
 
     return Promise.all(promises)
       .then(res => {

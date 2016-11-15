@@ -33,15 +33,18 @@ class BaseContentGenerator extends Generator {
         if (url) {
           this.renderer.render(item, variables)
             .then(content => {
-              this.fileSystem.write(`${url}/index.html`, content)
-                .then(function(){
-                  if (this.config.displayProgress) {
-                    console.timeEnd(`createOrUpdate ${item.sys.id}`)
-                  }
-                })
-                .then(resolve)
-                .catch(reject)
+              if (content instanceof Object) {
+                const promises = Object.keys(content)
+                  .map(k => ({ fileName: k, body: content[k] }))
+                  .map(ent => this.fileSystem.write(`${url}/${ent.fileName}`, ent.body))
+
+                return Promise.all(promises)
+              } else {
+                return this.fileSystem.write(`${url}/index.html`, content)
+              }
             })
+            .then(() => this.config.displayProgress && console.timeEnd(`createOrUpdate ${item.sys.id}`))
+            .then(resolve)
             .catch(err => {
               console.log(`failed to render: ${item.sys.id}`)
               resolve()

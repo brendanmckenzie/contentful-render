@@ -46,7 +46,7 @@ class BaseContentGenerator extends Generator {
             .then(() => this.config.displayProgress && console.timeEnd(`createOrUpdate ${item.sys.id}`))
             .then(resolve)
             .catch(err => {
-              console.log(`failed to render: ${item.sys.id}`)
+              console.log(`failed to render: ${item.sys.id}`, JSON.stringify(err))
               resolve()
              })
         }

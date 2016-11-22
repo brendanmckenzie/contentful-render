@@ -10,6 +10,10 @@ class BaseContentGenerator extends Generator {
   process(params) { }
 
   handleUpdates(res) {
+    if (this.config.displayProgress) {
+      console.log(`updates: ${res.data.entries.length}`)
+    }
+
     const tasks = [
       ...res.data.entries.map(item => ({ action: 'createOrUpdate', item })),
       // ...res.data.deletedEntries.map(item => ({ action: 'delete', item }))

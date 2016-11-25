@@ -1,11 +1,10 @@
 import Promise from 'bluebird'
-import axios from 'contentful-sdk-core/vendor-node/axios';
-import Contentful from 'contentful/dist/contentful';
+import express from 'express'
+import axios from 'contentful-sdk-core/vendor-node/axios'
+import Contentful from 'contentful/dist/contentful'
 import Router from '../lib/Router'
 import Renderer from '../lib/Renderer'
 import Model from '../lib/Model'
-
-import express from 'express';
 
 const Host = (config) => {
   const contentful = Contentful(axios, {

@@ -26,17 +26,16 @@ class Model {
           ret = _.map(ret, ent => ent.hasOwnProperty('fields') ? ({ ...extractLocale(ent), $item: ent }) : ent)
         }
         else if (ret && ret.hasOwnProperty('fields')) {
-          ret = { ...extractLocale(ret), $item: ret }
+          ret = Object.assign({}, extractLocale(ret), { $item: ret })
         }
 
         return ret
       })
     }
 
-    return {
-      ...extractLocale(item),
+    return Object.assign({}, extractLocale(item), {
       $item: item
-    }
+    })
   }
 }
 

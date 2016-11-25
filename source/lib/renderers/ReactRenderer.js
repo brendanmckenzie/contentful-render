@@ -8,10 +8,9 @@ class ReactRenderer extends BaseRenderer {
     return new Promise((resolve, reject) => {
       const element = React.createElement(template.body, model)
       const html = '<!DOCTYPE html>' + ReactDOMServer.renderToString(element)
-      const json = JSON.stringify({
-        ...model,
+      const json = JSON.stringify(Object.assign({}, model, {
         $template: template.name
-      })
+      }))
 
       resolve({
         'index.html': html,

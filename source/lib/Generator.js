@@ -28,6 +28,7 @@ class Generator {
 
   resolveVariables() {
     let obj = {}
+    // TODO: make this use _.mapKeys
     for (var k in this.config.variables) {
       obj[k] = this.config.variables[k](this.contentful, this.model)
     }

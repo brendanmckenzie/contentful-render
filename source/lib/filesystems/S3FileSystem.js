@@ -19,11 +19,10 @@ class S3FileSystem extends FileSystem {
   }
 
   read(filePath, params) {
-    const getObjectConfig = {
+    const getObjectConfig = Object.assign({}, {
       Key: this.translatePath(filePath),
-      Bucket: this.config.bucket,
-      ...params
-    }
+      Bucket: this.config.bucket
+    }, params)
 
     return this.s3.getObjectAsync(getObjectConfig)
       .then(result => result.Body.toString('utf8'))
@@ -31,14 +30,13 @@ class S3FileSystem extends FileSystem {
   }
 
   write(filePath, content, params) {
-    const putObjectConfig = {
+    const putObjectConfig = Object.assign({}, {
       ACL: 'public-read',
       Bucket: this.config.bucket,
       Key: this.translatePath(filePath),
       Body: content,
       ContentType: mime.lookup(filePath) || 'text/html',
-      ...params
-    }
+    }, params)
 
     return this.s3.putObjectAsync(putObjectConfig)
   }

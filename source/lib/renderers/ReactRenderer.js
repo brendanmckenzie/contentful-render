@@ -6,9 +6,8 @@ import React from 'react'
 class ReactRenderer extends BaseRenderer {
   render(template, model) {
     return new Promise((resolve, reject) => {
-      const element = React.createElement(template, model)
+      const element = React.createElement(template.body, model)
       const html = '<!DOCTYPE html>' + ReactDOMServer.renderToString(element)
-      // TODO: strip model of extraneous properties ($item, sys, ...)
       const json = JSON.stringify({
         ...model,
         $template: template.name

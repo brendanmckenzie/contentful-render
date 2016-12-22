@@ -5,8 +5,8 @@ class Model {
     this.config = config
   }
 
-  getModel(item, locale = null) {
-    locale = locale || this.config.defaultLocale
+  getModel(item, fullModel) {
+    const locale = this.config.defaultLocale
 
     const extractLocale = (item) => {
       return _.mapValues(item.fields, (value) => {

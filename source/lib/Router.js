@@ -10,11 +10,11 @@ class Router {
     this.contentful = contentful
   }
 
-  resolve(item, absolute) {
+  resolve(item, absolute, fullModel) {
     const def = this.config.contentTypes[item.sys.contentType.sys.id]
     if (!def) { return null }
 
-    const model = this.model.getModel(item)
+    const model = this.model.getModel(item, fullModel)
 
     const template = dot.template(def.route)
 

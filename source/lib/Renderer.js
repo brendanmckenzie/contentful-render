@@ -23,14 +23,14 @@ class Renderer {
     return !!def.canRender
   }
 
-  render(item, variables) {
+  render(item, variables, fullModel) {
     const def = this.config.contentTypes[item.sys.contentType.sys.id]
     if (!def) { return new Promise(resolve => resolve()) }
 
     const renderer = this.rendererMap[def.renderSystem]
     if (!renderer) { return new Promise(resolve => resolve()) }
 
-    const model = this.model.getModel(item)
+    const model = this.model.getModel(item, fullModel)
 
     variables = variables || {}
 
@@ -38,7 +38,7 @@ class Renderer {
       variables,
       model,
       md: (input) => marked(input || ''),
-      contentUrl: (model) => this.router.resolve(model.$item || model)
+      contentUrl: (model) => this.router.resolve(model.$item ? model.$item : model)
     })
   }
 }

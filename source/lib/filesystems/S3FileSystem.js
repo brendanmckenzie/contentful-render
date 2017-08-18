@@ -15,7 +15,10 @@ class S3FileSystem extends FileSystem {
   }
 
   translatePath(filePath) {
-    return path.join(this.config.destPath, filePath).replace(/^(\/+)/, '').replace(/(\/{2,})/g, '/')
+    return path.join(this.config.destPath, filePath)
+      .replace(/\\/g, '/')
+      .replace(/^(\/+)/, '')
+      .replace(/(\/{2,})/g, '/')
   }
 
   read(filePath, params) {

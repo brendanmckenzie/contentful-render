@@ -50,7 +50,7 @@ class S3FileSystem extends FileSystem {
       Key: this.translatePath(filePath)
     }
 
-    return this.s3.deleteObjectAsync(putObjectConfig)
+    return this.s3.deleteObjectAsync(deleteObjectConfig)
   }
 }
 

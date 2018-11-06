@@ -1,5 +1,4 @@
 import FileSystem from '../FileSystem'
-import Promise from 'bluebird'
 import path from 'path'
 import AWS from 'aws-sdk'
 import mime from 'mime-types'
@@ -11,7 +10,7 @@ class S3FileSystem extends FileSystem {
 
     this.config = config
 
-    this.s3 = Promise.promisifyAll(new AWS.S3())
+    this.s3 = new AWS.S3()
   }
 
   translatePath(filePath) {
@@ -27,9 +26,14 @@ class S3FileSystem extends FileSystem {
       Bucket: this.config.bucket
     }, params)
 
-    return this.s3.getObjectAsync(getObjectConfig)
+    return this.s3.getObject(getObjectConfig)
+      .promise()
       .then(result => result.Body.toString('utf8'))
-      .catch(err => null)
+      .catch(err => {
+        console.log('s3.getObject error', getObjectConfig, err)
+
+        return null
+      })
   }
 
   write(filePath, content, params) {
@@ -41,7 +45,7 @@ class S3FileSystem extends FileSystem {
       ContentType: mime.lookup(filePath) || 'text/html',
     }, params)
 
-    return this.s3.putObjectAsync(putObjectConfig)
+    return this.s3.putObject(putObjectConfig).promise()
   }
 
   delete(filePath) {
@@ -50,7 +54,7 @@ class S3FileSystem extends FileSystem {
       Key: this.translatePath(filePath)
     }
 
-    return this.s3.deleteObjectAsync(deleteObjectConfig)
+    return this.s3.deleteObject(deleteObjectConfig).promise()
   }
 }
 

@@ -9,6 +9,8 @@ import Model from './Model'
 
 class Generator {
   constructor(config, fileSystem) {
+    console.log('Generator..ctor', config)
+
     this.config = config
     this.fileSystem = fileSystem
 

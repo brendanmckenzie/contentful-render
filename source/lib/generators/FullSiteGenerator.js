@@ -6,6 +6,7 @@ class FullSiteGenerator extends BaseContentGenerator {
   }
 
   process(params) {
+    console.log('FullSiteGenerator.process', params)
     return Promise.all([
       this.contentful.sync({ initial: true }),
       this.resolveVariables() ])
